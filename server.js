@@ -1,27 +1,29 @@
 const express = require('express') // require the express package
-const app = express() 
+const app = express() // initialize your express app instance
 const cors = require('cors');
 app.use(express.json())
-app.use(cors()) 
+app.use(cors()) // after you initialize your express app instance
 require('dotenv').config();
 const port =process.env.PORT;
+const mongoUrl = process.env.MONGO_URL;
 const mongoose = require('mongoose');
 const{
  addBook,
- getBooks
- }= require('./controllers/Book.controller');
+ getBooks,
+ deleteBook,
+ updateBook}= require('./controllers/Book.controller');
 
 const seedUserData = require('./models/User.model');
 
 
-mongoose.connect('mongodb://localhost:27017/FavoriteBooks',
+mongoose.connect(`${mongoUrl}`,
     { useNewUrlParser: true, useUnifiedTopology: true }
 );
 
 
 
 
-seedUserData();
+  // seedUserData();
 
 // a server endpoint 
 app.get('/', // our endpoint name
@@ -31,4 +33,6 @@ app.get('/', // our endpoint name
  
 app.get('/books', getBooks);
 app.post('/book' , addBook);
-app.listen(port) // kick start the express server to work
+app.delete('/book/:book_idx', deleteBook);
+app.put('/book/:book_idx',updateBook)
+app.listen(port,`server listining on port ${port}`) // kick start the express server to work
