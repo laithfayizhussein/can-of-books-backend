@@ -1,19 +1,23 @@
-'use strict';
+'use strict'
 
-const mongoose = require('mongoose');
-const BookSchema = require('./books.model');
+const mongoose = require('mongoose')
+const BookSchema = require('./Book.model')
 
 
-const UserSchema = new mongoose.Schema({
-    email: String,
-    books: [BookSchema],
+
+
+const userSchema = new mongoose.Schema({
+    email: { type: String },
+    Books: [BookSchema]
+
 })
-const userModel = mongoose.model('users', UserSchema);
 
 
+const userModel = mongoose.model('user', userSchema)
 
- const seedMyUsercollection = () => {
-    const ahmad = new userModel({
+
+const seedUserData = () => {
+    const newUser = new userModel({
         email: 'ahmadabudames1999@gmail.com',
         books: [
             {
@@ -40,5 +44,9 @@ const userModel = mongoose.model('users', UserSchema);
     laith.save();
     ahmad.save();
 }
+// seedUserData();
 
 module.exports = userModel;
+
+
+ 
